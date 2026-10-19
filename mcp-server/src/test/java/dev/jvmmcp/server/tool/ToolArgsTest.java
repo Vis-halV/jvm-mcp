@@ -130,4 +130,21 @@ class ToolArgsTest {
         // Within bounds
         assertThat(ToolArgs.getIntArg(Map.of("limit", 250), "limit", 100, 1, 1000)).isEqualTo(250);
     }
+
+    @Test
+    @DisplayName("getStringArg allows null for optional arguments")
+    void testGetStringArgOptionalNullValue() {
+        Map<String, Object> args = new HashMap<>();
+        args.put("url", null);
+
+        assertThat(ToolArgs.getStringArg(args, "url", false)).isNull();
+    }
+
+    @Test
+    @DisplayName("getStringArg allows blank optional arguments")
+    void testGetStringArgOptionalBlankValue() {
+        Map<String, Object> args = Map.of("url", "   ");
+
+        assertThat(ToolArgs.getStringArg(args, "url", false)).isEqualTo("   ");
+    }
 }
